@@ -1,6 +1,8 @@
 # dependencies (bun install)
 node_modules
 
+/.neura_histroy.json
+/.codesnippet.md
 # output
 out
 dist
