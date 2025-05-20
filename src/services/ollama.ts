@@ -124,4 +124,4 @@ export async function* generateCompletionStream(model: string, prompt: string) {
 
     buffer = lines[lines.length - 1]; // keep partial line
   }
-}
+} 
