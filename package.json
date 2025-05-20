@@ -16,6 +16,7 @@
   "dependencies": {
     "axios": "^1.9.0",
     "chalk": "^5.4.1",
+    "cli-highlight": "^2.1.11",
     "inquirer": "^12.6.1",
     "ora": "^8.2.0",
     "prettier": "^3.5.3"
