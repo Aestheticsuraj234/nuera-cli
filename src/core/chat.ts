@@ -6,15 +6,28 @@ import { isCode, formatCode } from "../utils/formatter";
 import { createSpinner } from "../utils/spinner";
 import { saveCodeToFile } from "../utils/fileUtils";
 import { highlight } from "cli-highlight";
+import { ChromaService } from "../services/chroma";
+import { formatContextForPrompt } from "../utils/context";
 
-export function buildFullPrompt(history: { prompt: string; response: string }[], newPrompt: string) {
+const chromaService = ChromaService.getInstance();
+
+export function buildFullPrompt(
+  history: { prompt: string; response: string }[],
+  newPrompt: string,
+  context: string = ""
+) {
   const recent = history.slice(-3);
-  let context = "";
-  for (const pair of recent) {
-    context += `User: ${pair.prompt}\nAI: ${pair.response}\n`;
+  let promptText = "";
+  
+  if (context) {
+    promptText += context + "\n\n";
   }
-  context += `User: ${newPrompt}\nAI:`;
-  return context;
+  
+  for (const pair of recent) {
+    promptText += `User: ${pair.prompt}\nAI: ${pair.response}\n`;
+  }
+  promptText += `User: ${newPrompt}\nAI:`;
+  return promptText;
 }
 
 export async function chatLoop(
@@ -40,7 +53,11 @@ export async function chatLoop(
   spinner.start();
 
   try {
-    const fullPrompt = buildFullPrompt(conversationHistory, prompt);
+    // Get relevant context from ChromaDB
+    const contexts = await chromaService.searchContext(prompt);
+    const contextText = formatContextForPrompt(contexts);
+    
+    const fullPrompt = buildFullPrompt(conversationHistory, prompt, contextText);
     let responseText = "";
 
     if (useStreaming) {

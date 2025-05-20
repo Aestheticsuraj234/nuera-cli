@@ -1,26 +1,30 @@
 {
   "name": "cli-tool",
-  "module": "index.ts",
+  "version": "1.0.0",
   "type": "module",
   "private": true,
   "scripts": {
-    "start": "bun run index.ts",
-    "dev": "bun run index.ts"
+    "start": "bun run src/core/cli.ts",
+    "dev": "bun run src/core/cli.ts"
   },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "@types/inquirer": "^9.0.7",
+    "@types/node": "^20.11.19",
+    "bun-types": "latest",
+    "typescript": "^5.3.3"
   },
   "peerDependencies": {
     "typescript": "^5"
   },
   "dependencies": {
     "axios": "^1.9.0",
-    "chalk": "^5.4.1",
+    "chalk": "^5.3.0",
     "chromadb": "^2.4.6",
     "cli-highlight": "^2.1.11",
-    "inquirer": "^12.6.1",
+    "inquirer": "^9.2.12",
     "langchain": "^0.3.26",
-    "ora": "^8.2.0",
+    "ora": "^7.0.1",
     "prettier": "^3.5.3"
   }
 }
